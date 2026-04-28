@@ -7,6 +7,10 @@
 <meta name="description" content="Scan photos to HD PDF instantly. No sign-up, no uploads, 100% free. Works in your browser — your files never leave your device.">
 <meta property="og:title" content="ScanPro – Free HD Image to PDF Scanner">
 <meta property="og:description" content="Turn any photo into a perfect PDF. No sign-up, 100% private, works instantly.">
+<link rel="manifest" href="/manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0a0a0f">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -325,8 +329,8 @@ const { jsPDF } = window.jspdf;
 
 /* ─── GUMROAD CONFIG ─── Replace these URLs after you create your products ─── */
 const GUMROAD = {
-  monthly: 'https://dataknight6.gumroad.com/l/scanpro-monthly',
-  yearly:  'https://dataknight6.gumroad.com/l/scanpro-yearly'
+  monthly: 'https://YOUR_NAME.gumroad.com/l/scanpro-monthly',
+  yearly:  'https://YOUR_NAME.gumroad.com/l/scanpro-yearly'
 };
 /* ─── VALID LICENSE KEYS ─── Add keys from Gumroad dashboard here ─── */
 /* In production, verify server-side. For MVP, a static list works fine. */
@@ -541,6 +545,16 @@ async function makePDF() {
 checkPro();
 loadUsage();
 updateUsageUI();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(r => console.log('SW registered:', r.scope))
+      .catch(e => console.log('SW error:', e));
+  });
+}
 </script>
 </body>
 </html>
