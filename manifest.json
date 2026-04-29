@@ -1,16 +1,28 @@
 {
   "name": "ScanPro – HD Document Scanner",
   "short_name": "ScanPro",
-  "description": "Scan documents & photos to HD PDF instantly. Works offline. No uploads. No account needed.",
+  "description": "Scan documents and photos to HD PDF instantly. Works offline. No uploads. No account needed.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0a0a0f",
   "theme_color": "#7c5cfc",
+  "lang": "en-US",
+  "dir": "ltr",
   "categories": ["productivity", "utilities"],
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable any" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable any" }
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Scan Document",
+      "short_name": "Scan",
+      "description": "Open scanner",
+      "url": "/",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
   ],
   "prefer_related_applications": false
 }
