@@ -11,7 +11,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ScanPro – Free HD Image to PDF Scanner</title>
+<title>ScanPro – HD Document Scanner</title>
 <meta name="description" content="Scan photos to HD PDF instantly. No sign-up, no uploads, 100% free. Works in your browser — your files never leave your device.">
 <meta property="og:title" content="ScanPro – Free HD Image to PDF Scanner">
 <meta property="og:description" content="Turn any photo into a perfect PDF. No sign-up, 100% private, works instantly.">
@@ -153,68 +153,27 @@ select:focus,input[type=text]:focus{border-color:var(--accent)}
 .feat::before{content:'✓';color:var(--success);font-weight:700;flex-shrink:0}
 .modal-divider{display:flex;align-items:center;gap:10px;margin:1rem 0;font-size:0.75rem;color:var(--muted)}
 .modal-divider::before,.modal-divider::after{content:'';flex:1;height:1px;background:var(--border)}
-.key-input-row{display:flex;gap:8px}
-.key-input-row input{flex:1;margin-bottom:0}
-.key-btn{background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 14px;font-family:'DM Sans',sans-serif;font-size:0.82rem;cursor:pointer;white-space:nowrap;transition:border-color 0.2s}
-.key-btn:hover{border-color:var(--accent);color:var(--accent)}
-.key-msg{font-size:0.75rem;margin-top:6px;min-height:16px;text-align:center}
-.key-msg.ok{color:var(--success)}
-.key-msg.err{color:var(--accent2)}
+
 
 /* FOOTER */
 .foot{display:flex;gap:1.5rem;padding:1rem 2rem;border-top:1px solid var(--border);font-size:0.76rem;color:var(--muted);flex-wrap:wrap;max-width:1050px;margin:0 auto}
 .foot strong{color:var(--text)}
 </style>
+
+<style>
+#ad-banner { font-family: 'DM Sans', sans-serif; }
+@media screen {
+  body { padding-bottom: 70px; }
+}
+</style>
+
 </head>
 <body>
 
-<!-- PAYWALL MODAL -->
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-badge">⚡ Free limit reached</div>
-    <h2>You've used your<br><em>3 free PDFs today</em></h2>
-    <p>Upgrade to Pro for unlimited PDFs, OCR text extraction, e-signature, batch processing &amp; more. Resets every 24 hours otherwise.</p>
-
-    <div class="modal-plans">
-      <a class="plan-card" id="planMonthly" href="#" onclick="goGumroad('monthly');return false">
-        <div class="plan-price">$4.99<span>/mo</span></div>
-        <div class="plan-name">Monthly</div>
-        <div class="plan-save">&nbsp;</div>
-      </a>
-      <a class="plan-card best" id="planYearly" href="#" onclick="goGumroad('yearly');return false">
-        <div class="best-tag">Best value</div>
-        <div class="plan-price">$2.99<span>/mo</span></div>
-        <div class="plan-name">Yearly ($29/yr)</div>
-        <div class="plan-save">Save 40%</div>
-      </a>
-    </div>
-
-    <a class="modal-cta" href="#" onclick="goGumroad('yearly');return false">Upgrade to Pro — $29/year ✦</a>
-
-    <div class="modal-feats">
-      <div class="feat">Unlimited PDFs</div>
-      <div class="feat">OCR text layer</div>
-      <div class="feat">E-signature</div>
-      <div class="feat">100+ pages/PDF</div>
-      <div class="feat">Watermark removal</div>
-      <div class="feat">Priority support</div>
-    </div>
-
-    <div class="modal-divider">Already have a key?</div>
-    <div class="key-input-row">
-      <input type="text" id="licenseKey" placeholder="Enter your license key…">
-      <button class="key-btn" onclick="activateKey()">Activate</button>
-    </div>
-    <p class="key-msg" id="keyMsg"></p>
-  </div>
-</div>
 
 <nav>
-  <a href="/" class="logo"><span>Scan</span><em>Pro</em><span class="plan-tag tag-free" id="planTag">FREE</span></a>
+  <a href="/" class="logo"><span>Scan</span><em>Pro</em></a>
   <div class="nav-right">
-    <span class="usage-pill" id="usagePill">3 / 3 PDFs today</span>
-    <button class="upgrade-nav" id="upgradeNav" onclick="openModal()">Upgrade to Pro ✦</button>
   </div>
 </nav>
 
@@ -255,13 +214,6 @@ select:focus,input[type=text]:focus{border-color:var(--accent)}
       </div>
       <div class="grid" id="grid"></div>
     </div>
-
-    <div class="promo" id="promoBand">
-      <div>
-        <strong>Go Pro — from $2.99 / month</strong>
-        <p>OCR text extraction · e-signature · batch 100+ pages · watermark removal</p>
-      </div>
-      <a href="#" onclick="openModal();return false">See Pro features →</a>
     </div>
   </div>
 
@@ -297,12 +249,6 @@ select:focus,input[type=text]:focus{border-color:var(--accent)}
       <div class="tog-row"><span class="tog-lbl">Auto-straighten</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
       <div class="tog-row"><span class="tog-lbl">Sharpen edges</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
       <div class="tog-row"><span class="tog-lbl">Remove shadows</span><div class="tog" onclick="this.classList.toggle('on')"></div></div>
-      <div class="pro-lock" id="proLock">
-        <div class="tog-row"><span class="tog-lbl">OCR text layer &nbsp;<span class="pro-badge">PRO</span></span><div class="tog" id="ocrTog" onclick="this.classList.toggle('on')"></div></div>
-        <div class="tog-row"><span class="tog-lbl">E-signature &nbsp;<span class="pro-badge">PRO</span></span><div class="tog" onclick="this.classList.toggle('on')"></div></div>
-        <div class="tog-row"><span class="tog-lbl">Watermark removal &nbsp;<span class="pro-badge">PRO</span></span><div class="tog" onclick="this.classList.toggle('on')"></div></div>
-        <div class="lock-note" id="lockNote">🔒 Upgrade to Pro to unlock</div>
-      </div>
     </div>
 
     <button class="gen-btn" id="genBtn" disabled onclick="makePDF()">
@@ -311,37 +257,21 @@ select:focus,input[type=text]:focus{border-color:var(--accent)}
     </button>
     <div class="prog-wrap" id="pw"><div class="prog-bar" id="pb"></div></div>
     <p class="status" id="st">Add images above to get started</p>
-
-    <div class="limit-bar" id="limitBar">
-      <div class="limit-top">
-        <span class="limit-label" id="limitLabel">Free PDFs used today</span>
-        <span class="limit-count" id="limitCount">0 / 3</span>
-      </div>
-      <div class="limit-track"><div class="limit-fill" id="limitFill" style="width:0%"></div></div>
-    </div>
   </aside>
 </main>
 
 <footer class="foot">
   <span>PDFs this session: <strong id="sc">0</strong></span>
   <span>Pages processed: <strong id="pp">0</strong></span>
-  <span style="color:rgba(124,92,252,0.7)">✓ Zero data sent to any server — 100% browser-based</span>
+  <span style="color:rgba(124,92,252,0.7)">✓ Zero data sent to any server — 100% browser-based</span> &nbsp;<a href="/privacy.html" style="color:var(--muted);font-size:0.76rem;text-decoration:none;">Privacy Policy</a>
 </footer>
 
 <script>
 const { jsPDF } = window.jspdf;
 
-/* ─── GUMROAD CONFIG ─── Replace these URLs after you create your products ─── */
-const GUMROAD = {
-  monthly: 'https://YOUR_NAME.gumroad.com/l/scanpro-monthly',
-  yearly:  'https://YOUR_NAME.gumroad.com/l/scanpro-yearly'
-};
-/* ─── VALID LICENSE KEYS ─── Add keys from Gumroad dashboard here ─── */
-/* In production, verify server-side. For MVP, a static list works fine. */
-const VALID_KEYS_PREFIX = 'SCAN-PRO-'; // Gumroad keys start with this
 
 /* ─── STATE ─── */
-const FREE_LIMIT = 3;
+const FREE_LIMIT = 9999;
 let imgs = [], sessionPDFs = 0, sessionPages = 0;
 let isPro = false;
 let todayCount = 0;
@@ -363,89 +293,39 @@ function checkPro() {
 }
 
 function updateUsageUI() {
-  const pill = document.getElementById('usagePill');
-  const fill = document.getElementById('limitFill');
-  const countEl = document.getElementById('limitCount');
-  const limitBar = document.getElementById('limitBar');
-  if (isPro) {
-    pill.textContent = '✓ Pro — Unlimited';
-    pill.className = 'usage-pill';
-    limitBar.style.display = 'none';
-    document.getElementById('upgradeNav').style.display = 'none';
-    document.getElementById('promoBand').style.display = 'none';
-    document.getElementById('planTag').textContent = 'PRO';
-    document.getElementById('planTag').className = 'plan-tag tag-pro';
-    document.getElementById('proLock').classList.add('unlocked');
-    document.getElementById('lockNote').style.display = 'none';
-  } else {
-    const rem = Math.max(0, FREE_LIMIT - todayCount);
-    const pct = Math.min(100, Math.round((todayCount / FREE_LIMIT) * 100));
-    countEl.textContent = todayCount + ' / ' + FREE_LIMIT;
-    fill.style.width = pct + '%';
-    if (rem === 0) {
-      pill.textContent = 'Limit reached';
-      pill.className = 'usage-pill full';
-    } else if (rem === 1) {
-      pill.textContent = rem + ' PDF left today';
-      pill.className = 'usage-pill warn';
-    } else {
-      pill.textContent = rem + ' / ' + FREE_LIMIT + ' PDFs today';
-      pill.className = 'usage-pill';
-    }
-  }
+  // Android version: no usage UI elements — safe no-op
+  // All elements (usagePill, limitBar etc.) removed from HTML
+  const safe = (id, fn) => { const el = document.getElementById(id); if (el) fn(el); };
+  safe('usagePill', el => { el.textContent = isPro ? '✓ Pro' : 'Free'; });
+  safe('limitBar',  el => { el.style.display = 'none'; });
+  safe('limitFill', el => { el.style.width = '0%'; });
+  safe('limitCount',el => { el.textContent = ''; });
 }
 
-function openModal() {
-  document.getElementById('modalOverlay').classList.add('open');
-}
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-  document.getElementById('keyMsg').textContent = '';
-}
-document.getElementById('modalOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
 
-function goGumroad(plan) {
-  window.open(GUMROAD[plan], '_blank');
-}
 
-function activateKey() {
-  const key = document.getElementById('licenseKey').value.trim().toUpperCase();
-  const msg = document.getElementById('keyMsg');
-  if (!key) { msg.textContent = 'Please enter your license key.'; msg.className = 'key-msg err'; return; }
-  /* 
-    MVP validation: check key format / length.
-    For production: call Gumroad's License API:
-    POST https://api.gumroad.com/v2/licenses/verify
-    { product_id: 'YOUR_ID', license_key: key }
-  */
-  if (key.length >= 10) {
-    localStorage.setItem('sp_pro_key', key);
-    isPro = true;
-    msg.textContent = '✓ Pro activated! Enjoy unlimited access.';
-    msg.className = 'key-msg ok';
-    updateUsageUI();
-    setTimeout(closeModal, 1600);
-  } else {
-    msg.textContent = 'Invalid key. Check your Gumroad receipt email.';
-    msg.className = 'key-msg err';
-  }
-}
+
+
+
+
+
 
 /* ─── FILE HANDLING ─── */
-const dz = document.getElementById('dz');
-const fi = document.getElementById('fileIn');
-const grid = document.getElementById('grid');
+const dz      = document.getElementById('dz');
+const fi      = document.getElementById('fileIn');
+const grid    = document.getElementById('grid');
 const prevSec = document.getElementById('prevSec');
-const genBtn = document.getElementById('genBtn');
-const cnt = document.getElementById('cnt');
-const st = document.getElementById('st');
+const genBtn  = document.getElementById('genBtn');
+const cnt     = document.getElementById('cnt');
+const st      = document.getElementById('st');
 
-dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
-dz.addEventListener('dragleave', () => dz.classList.remove('over'));
-dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('over'); loadFiles(e.dataTransfer.files); });
-fi.addEventListener('change', e => loadFiles(e.target.files));
+// Guard: only attach listeners if elements exist
+if (dz) {
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('over'); });
+  dz.addEventListener('dragleave', () => dz.classList.remove('over'));
+  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('over'); loadFiles(e.dataTransfer.files); });
+}
+if (fi) fi.addEventListener('change', e => loadFiles(e.target.files));
 
 function loadFiles(files) {
   [...files].forEach(f => {
@@ -480,7 +360,7 @@ function rm(i) { imgs.splice(i, 1); render(); }
 /* ─── GENERATE PDF ─── */
 async function makePDF() {
   if (!imgs.length) return;
-  if (!isPro && todayCount >= FREE_LIMIT) { openModal(); return; }
+  // Android: fully free, no paywall
 
   genBtn.disabled = true;
   document.getElementById('pw').style.display = 'block';
@@ -527,16 +407,12 @@ async function makePDF() {
     /* increment counter */
     if (!isPro) { todayCount++; saveUsage(); updateUsageUI(); }
     sessionPDFs++; sessionPages += imgs.length;
-    document.getElementById('sc').textContent = sessionPDFs;
-    document.getElementById('pp').textContent = sessionPages;
+    const scEl = document.getElementById('sc'); if (scEl) scEl.textContent = sessionPDFs;
+    const ppEl = document.getElementById('pp'); if (ppEl) ppEl.textContent = sessionPages;
     st.textContent = `✓ "${fname}.pdf" downloaded — ${imgs.length} pages`;
     st.className = 'status ok';
 
-    /* show paywall after 3rd free PDF */
-    if (!isPro && todayCount >= FREE_LIMIT) {
-      setTimeout(openModal, 1200);
-    }
-    setTimeout(() => { document.getElementById('pw').style.display = 'none'; document.getElementById('pb').style.width = '0%'; }, 2000);
+        setTimeout(() => { document.getElementById('pw').style.display = 'none'; document.getElementById('pb').style.width = '0%'; }, 2000);
   } catch(e) {
     st.textContent = 'Error generating PDF. Please try again.';
     st.className = 'status err';
@@ -546,20 +422,37 @@ async function makePDF() {
 }
 
 /* ─── INIT ─── */
-checkPro();
-loadUsage();
-updateUsageUI();
+function initApp() {
+  checkPro();
+  loadUsage();
+  updateUsageUI();
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}
 </script>
 
 
 <script>
+// Service Worker — deferred until page fully idle
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(r => console.log('SW registered:', r.scope))
-      .catch(e => console.warn('SW failed:', e));
-  });
+  function registerSW() {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .then(r => console.log('[ScanPro] SW ready:', r.scope))
+      .catch(e => console.log('[ScanPro] SW skipped (normal in dev):', e.message));
+  }
+  // Use requestIdleCallback if available, else plain load event
+  if (document.readyState === 'complete') {
+    setTimeout(registerSW, 500);
+  } else {
+    window.addEventListener('load', () => setTimeout(registerSW, 500));
+  }
 }
 </script>
+
+</div>
+
 </body>
 </html>
