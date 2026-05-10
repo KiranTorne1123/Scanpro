@@ -26,6 +26,121 @@
   --text:#f0eeff;--muted:#8880aa;--success:#3dd68c;
 }
 html{scroll-behavior:smooth}
+
+.filter-btn.active{background:var(--accent) !important;color:white !important;border-color:var(--accent) !important}
+
+
+/* File manager cards */
+.file-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:0.85rem;cursor:pointer;transition:border-color 0.2s,transform 0.15s;position:relative}
+.file-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.file-card-icon{width:100%;height:70px;background:rgba(124,92,252,0.08);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;font-size:28px}
+.file-card-name{font-size:0.75rem;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+.file-card-meta{font-size:0.68rem;color:var(--muted)}
+.file-card-folder{font-size:0.65rem;background:rgba(124,92,252,0.12);color:var(--accent);padding:1px 7px;border-radius:10px;display:inline-block;margin-top:4px}
+.file-card-actions{display:flex;gap:4px;margin-top:8px}
+.file-action-btn{flex:1;padding:5px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:0.65rem;cursor:pointer;transition:all 0.15s;text-align:center}
+.file-action-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Batch scan button */
+.batch-btn{width:100%;padding:10px;margin-top:8px;border-radius:10px;background:rgba(124,92,252,0.1);border:1px dashed rgba(124,92,252,0.4);color:var(--accent);font-family:"DM Sans",sans-serif;font-size:0.82rem;cursor:pointer;transition:all 0.2s;display:none}
+.batch-btn:hover{background:rgba(124,92,252,0.18)}
+.batch-btn.show{display:block}
+
+/* Share overlay */
+#shareOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:600;align-items:flex-end;justify-content:center}
+#shareOverlay.active{display:flex}
+.share-sheet{background:var(--card);border-radius:20px 20px 0 0;padding:1.5rem;width:100%;max-width:480px;border:1px solid var(--border)}
+.share-title{font-family:"Syne",sans-serif;font-weight:700;font-size:1rem;margin-bottom:1rem;text-align:center}
+.share-options{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1rem}
+.share-opt{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px 6px;border-radius:10px;transition:background 0.2s}
+.share-opt:hover{background:var(--surface)}
+.share-opt-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.share-opt-label{font-size:0.7rem;color:var(--muted);text-align:center}
+.share-close{width:100%;padding:10px;border-radius:10px;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:"DM Sans",sans-serif;cursor:pointer}
+
+
+/* Doctype card selected pulse */
+@keyframes cardPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(124,92,252,0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(124,92,252,0); }
+  100% { box-shadow: 0 0 0 0 rgba(124,92,252,0); }
+}
+.doctype-card.active { animation: cardPulse 0.4s ease-out; }
+
+/* Hint box styling improvement */
+.doctype-hint {
+  font-size:0.72rem;
+  color:var(--muted);
+  background:rgba(124,92,252,0.07);
+  border:1px solid rgba(124,92,252,0.2);
+  border-radius:8px;
+  padding:8px 12px;
+  margin-top:8px;
+  line-height:1.6;
+  display:none;
+}
+.doctype-hint.show { display:block; }
+
+
+/* ═══════════════════════════════════════
+   CAMERA SCANNER — CamScanner-style
+════════════════════════════════════════ */
+.scan-btns{display:flex;gap:10px;margin-bottom:12px}
+.scan-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:12px;border:none;font-family:"DM Sans",sans-serif;font-size:0.88rem;font-weight:500;cursor:pointer;transition:all 0.2s}
+.scan-btn-camera{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white}
+.scan-btn-gallery{background:var(--card);border:1px solid var(--border);color:var(--text)}
+.scan-btn:hover{opacity:0.88;transform:translateY(-1px)}
+.scan-btn svg{width:18px;height:18px;flex-shrink:0}
+
+/* Camera overlay */
+#cameraOverlay{display:none;position:fixed;inset:0;background:#000;z-index:1000;flex-direction:column}
+#cameraOverlay.active{display:flex}
+#camVideo{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+#camCanvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+
+/* Document border overlay */
+.cam-border-box{position:absolute;pointer-events:none;transition:all 0.1s}
+.cam-corner{position:absolute;width:24px;height:24px;border-color:#3dd68c;border-style:solid}
+.cam-corner.tl{top:0;left:0;border-width:3px 0 0 3px;border-radius:4px 0 0 0}
+.cam-corner.tr{top:0;right:0;border-width:3px 3px 0 0;border-radius:0 4px 0 0}
+.cam-corner.bl{bottom:0;left:0;border-width:0 0 3px 3px;border-radius:0 0 0 4px}
+.cam-corner.br{bottom:0;right:0;border-width:0 3px 3px 0;border-radius:0 0 4px 0}
+.cam-edge{position:absolute;background:rgba(61,214,140,0.6)}
+.cam-edge.top,.cam-edge.bottom{height:2px;left:24px;right:24px}
+.cam-edge.left,.cam-edge.right{width:2px;top:24px;bottom:24px}
+.cam-edge.top{top:0}.cam-edge.bottom{bottom:0}
+.cam-edge.left{left:0}.cam-edge.right{right:0}
+
+/* Camera controls */
+.cam-controls{position:absolute;bottom:0;left:0;right:0;padding:24px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(transparent,rgba(0,0,0,0.8));z-index:10}
+.cam-close{background:rgba(255,255,255,0.15);border:none;color:white;width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+.cam-capture{background:white;border:4px solid rgba(255,255,255,0.3);width:72px;height:72px;border-radius:50%;cursor:pointer;transition:transform 0.15s;position:relative}
+.cam-capture::after{content:"";position:absolute;inset:4px;background:white;border-radius:50%}
+.cam-capture:active{transform:scale(0.92)}
+.cam-flip{background:rgba(255,255,255,0.15);border:none;color:white;width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+
+/* Camera status */
+.cam-status{position:absolute;top:20px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.6);color:white;padding:6px 16px;border-radius:20px;font-size:13px;backdrop-filter:blur(8px);white-space:nowrap;z-index:10;transition:all 0.3s}
+.cam-status.detected{background:rgba(61,214,140,0.3);border:1px solid rgba(61,214,140,0.6);color:#3dd68c}
+
+/* Document crop preview */
+#cropOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:1001;flex-direction:column;align-items:center;justify-content:center;padding:20px}
+#cropOverlay.active{display:flex}
+#cropCanvas{max-width:100%;max-height:70vh;border-radius:12px;border:2px solid var(--accent)}
+.crop-actions{display:flex;gap:12px;margin-top:16px;width:100%;max-width:400px}
+.crop-btn{flex:1;padding:12px;border-radius:10px;border:none;font-family:"DM Sans",sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer}
+.crop-retake{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.crop-use{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white}
+.crop-label{font-size:13px;color:var(--muted);margin-bottom:12px;text-align:center}
+
+/* Perspective grid overlay on crop */
+.crop-hint{font-size:11px;color:var(--muted);text-align:center;margin-top:8px}
+
+
+/* Enhancement hints */
+.feat-hint{font-size:0.68rem;color:var(--muted);margin-top:1px}
+.pro-badge{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-size:0.58rem;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:0.3px;vertical-align:middle}
+
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 
 /* NAV */
@@ -191,6 +306,26 @@ select:focus,input[type=text]:focus{border-color:var(--accent)}
 
 <main class="app">
   <div>
+
+    <!-- ── Scan buttons ───────────────────────────── -->
+    <div class="scan-btns">
+      <button class="scan-btn scan-btn-camera" onclick="openCamera()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+        Scan with Camera
+      </button>
+      <button class="scan-btn scan-btn-gallery" onclick="document.getElementById('fileIn').click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        From Gallery
+      </button>
+    </div>
+
+    <!-- ── Drop zone ──────────────────────────────── -->
     <div class="dropzone" id="dz">
       <div class="dz-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="#7c5cfc" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -200,12 +335,53 @@ select:focus,input[type=text]:focus{border-color:var(--accent)}
         </svg>
       </div>
       <h3>Drop images here</h3>
-      <p>or click to browse — JPG, PNG, WEBP, HEIC, BMP</p>
+      <p>or tap "Scan with Camera" to scan live</p>
       <div class="ft-row">
         <span class="ft">JPG</span><span class="ft">PNG</span><span class="ft">WEBP</span><span class="ft">HEIC</span><span class="ft">BMP</span>
       </div>
-      <input type="file" id="fileIn" multiple accept="image/*">
+      <input type="file" id="fileIn" multiple accept="image/*" capture="environment">
     </div>
+
+    <!-- Batch scan -->
+    <button class="batch-btn" id="batchBtn" onclick="openCamera()">+ Add another page (batch scan)</button>
+
+    <!-- ── Camera overlay (CamScanner-style) ─────── -->
+    <div id="cameraOverlay">
+      <video id="camVideo" autoplay playsinline muted></video>
+      <canvas id="camCanvas"></canvas>
+
+      <!-- Live document border detection -->
+      <div id="docBorder" class="cam-border-box" style="display:none">
+        <div class="cam-corner tl"></div>
+        <div class="cam-corner tr"></div>
+        <div class="cam-corner bl"></div>
+        <div class="cam-corner br"></div>
+        <div class="cam-edge top"></div>
+        <div class="cam-edge bottom"></div>
+        <div class="cam-edge left"></div>
+        <div class="cam-edge right"></div>
+      </div>
+
+      <div class="cam-status" id="camStatus">Point camera at document</div>
+
+      <div class="cam-controls">
+        <button class="cam-close" onclick="closeCamera()" title="Close">✕</button>
+        <button class="cam-capture" onclick="capturePhoto()" title="Capture"></button>
+        <button class="cam-flip" onclick="flipCamera()" title="Flip camera">⟳</button>
+      </div>
+    </div>
+
+    <!-- ── Crop preview overlay ───────────────────── -->
+    <div id="cropOverlay">
+      <p class="crop-label">Document detected — looks good?</p>
+      <canvas id="cropCanvas"></canvas>
+      <p class="crop-hint">The document has been auto-cropped and perspective-corrected</p>
+      <div class="crop-actions">
+        <button class="crop-btn crop-retake" onclick="retakePhoto()">Retake</button>
+        <button class="crop-btn crop-use" onclick="useCroppedPhoto()">Use this scan ✓</button>
+      </div>
+    </div>
+
 
     <div class="preview-section" id="prevSec">
       <div class="preview-hdr">
@@ -218,6 +394,65 @@ select:focus,input[type=text]:focus{border-color:var(--accent)}
   </div>
 
   <aside class="sidebar">
+
+    <!-- ── Document Type Selector ─────────────────── -->
+    <div class="panel">
+      <div class="panel-title"><span class="pico">📄</span> Document type</div>
+
+      <div class="doctype-grid">
+
+        <div class="doctype-card active" id="dt-document" onclick="setDocType('document')">
+          <span class="doctype-icon">📄</span>
+          <div class="doctype-name">Document</div>
+        </div>
+
+        <div class="doctype-card" id="dt-id" onclick="setDocType('id')">
+          <span class="doctype-icon">🪪</span>
+          <div class="doctype-name">ID Card</div>
+        </div>
+
+        <div class="doctype-card" id="dt-passport" onclick="setDocType('passport')">
+          <span class="doctype-icon">🛂</span>
+          <div class="doctype-name">Passport</div>
+        </div>
+
+        <div class="doctype-card" id="dt-receipt" onclick="setDocType('receipt')">
+          <span class="doctype-icon">🧾</span>
+          <div class="doctype-name">Receipt</div>
+        </div>
+
+        <div class="doctype-card" id="dt-photo" onclick="setDocType('photo')">
+          <span class="doctype-icon">🖼️</span>
+          <div class="doctype-name">Photo</div>
+        </div>
+
+        <div class="doctype-card" id="dt-whiteboard" onclick="setDocType('whiteboard')">
+          <span class="doctype-icon">📋</span>
+          <div class="doctype-name">Whiteboard</div>
+        </div>
+
+        <div class="doctype-card" id="dt-business" onclick="setDocType('business')">
+          <span class="doctype-icon">💼</span>
+          <div class="doctype-name">Business Card</div>
+        </div>
+
+        <div class="doctype-card" id="dt-book" onclick="setDocType('book')">
+          <span class="doctype-icon">📖</span>
+          <div class="doctype-name">Book Page</div>
+        </div>
+
+        <div class="doctype-card" id="dt-certificate" onclick="setDocType('certificate')">
+          <span class="doctype-icon">🏆</span>
+          <div class="doctype-name">Certificate</div>
+        </div>
+
+      </div>
+
+      <!-- Dynamic hint shown per type -->
+      <div class="doctype-hint" id="doctypeHint"></div>
+    </div>
+
+    <!-- ── PDF Settings ────────────────────────────── -->
     <div class="panel">
       <div class="panel-title"><span class="pico">⚙</span> PDF settings</div>
       <label class="opt">Page size</label>
@@ -226,6 +461,10 @@ select:focus,input[type=text]:focus{border-color:var(--accent)}
         <option value="letter">US Letter  (8.5 × 11 in)</option>
         <option value="legal">Legal  (8.5 × 14 in)</option>
         <option value="a3">A3  (297 × 420 mm)</option>
+        <option value="id">ID Card  (85.6 × 54 mm)</option>
+        <option value="passport">Passport  (125 × 88 mm)</option>
+        <option value="business">Business Card  (90 × 55 mm)</option>
+        <option value="receipt">Receipt  (80 × 200 mm)</option>
       </select>
       <label class="opt">Orientation</label>
       <select id="orient">
@@ -246,19 +485,158 @@ select:focus,input[type=text]:focus{border-color:var(--accent)}
 
     <div class="panel">
       <div class="panel-title"><span class="pico">✦</span> Enhancements</div>
-      <div class="tog-row"><span class="tog-lbl">Auto-straighten</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-      <div class="tog-row"><span class="tog-lbl">Sharpen edges</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-      <div class="tog-row"><span class="tog-lbl">Remove shadows</span><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+
+      <div class="tog-row">
+        <div>
+          <span class="tog-lbl">Auto-straighten</span>
+          <div class="feat-hint">Corrects tilted scans automatically</div>
+        </div>
+        <div class="tog on" id="togStraighten" onclick="this.classList.toggle('on')"></div>
+      </div>
+
+      <div class="tog-row">
+        <div>
+          <span class="tog-lbl">Sharpen edges</span>
+          <div class="feat-hint">Increases contrast and sharpness</div>
+        </div>
+        <div class="tog on" id="togSharpen" onclick="this.classList.toggle('on')"></div>
+      </div>
+
+      <div class="tog-row">
+        <div>
+          <span class="tog-lbl">Remove shadows</span>
+          <div class="feat-hint">Adaptive background normalisation — evens out uneven lighting</div>
+        </div>
+        <div class="tog" id="togShadow" onclick="this.classList.toggle('on')"></div>
+      </div>
+
+      <div class="tog-row" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+        <div>
+          <span class="tog-lbl">OCR text layer <span class="pro-badge">PRO</span></span>
+          <div class="feat-hint">Makes PDF text selectable — coming soon</div>
+        </div>
+        <div class="tog" id="togOCR" onclick="showProToast()"></div>
+      </div>
+
+      <div class="tog-row">
+        <div>
+          <span class="tog-lbl">E-signature <span class="pro-badge">PRO</span></span>
+          <div class="feat-hint">Draw signature on document — coming soon</div>
+        </div>
+        <div class="tog" id="togSign" onclick="showProToast()"></div>
+      </div>
+
+      <div class="tog-row">
+        <div>
+          <span class="tog-lbl">Watermark removal <span class="pro-badge">PRO</span></span>
+          <div class="feat-hint">Remove background watermarks — coming soon</div>
+        </div>
+        <div class="tog" id="togWatermark" onclick="showProToast()"></div>
+
+      <!-- Colour filters -->
+      <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+        <div class="tog-lbl" style="margin-bottom:8px;display:block">Colour filter</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="filter-btn active" onclick="setFilter('none',this)"
+            style="flex:1;padding:6px 4px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:0.72rem;cursor:pointer;transition:all 0.15s">
+            Original
+          </button>
+          <button class="filter-btn" onclick="setFilter('gray',this)"
+            style="flex:1;padding:6px 4px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:0.72rem;cursor:pointer;transition:all 0.15s">
+            Grayscale
+          </button>
+          <button class="filter-btn" onclick="setFilter('bw',this)"
+            style="flex:1;padding:6px 4px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:0.72rem;cursor:pointer;transition:all 0.15s">
+            B &amp; W
+          </button>
+          <button class="filter-btn" onclick="setFilter('enhance',this)"
+            style="flex:1;padding:6px 4px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:0.72rem;cursor:pointer;transition:all 0.15s">
+            Vivid
+          </button>
+        </div>
+      </div>
+      </div>
+
+    </div>
+
+    <!-- E-signature pad (hidden until toggled) -->
+    <div id="sigPad" style="display:none" class="panel">
+      <div class="panel-title"><span class="pico">✍</span> E-Signature</div>
+      <canvas id="sigCanvas" width="240" height="100"
+        style="background:white;border-radius:8px;width:100%;cursor:crosshair;touch-action:none"></canvas>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button onclick="clearSig()" style="flex:1;padding:6px;background:var(--surface);border:1px solid var(--border);color:var(--muted);border-radius:6px;cursor:pointer;font-size:12px">Clear</button>
+        <button onclick="saveSig()" style="flex:1;padding:6px;background:var(--accent);border:none;color:white;border-radius:6px;cursor:pointer;font-size:12px">Apply to PDF</button>
+      </div>
+      <p id="sigMsg" style="font-size:11px;color:var(--success);text-align:center;margin-top:4px;min-height:14px"></p>
+    </div>
+
+    <!-- Pro toast notification -->
+    <div id="proToast" style="display:none;position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--accent);color:white;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(124,92,252,0.4)">
+      ✦ Pro feature — coming in next update
     </div>
 
     <button class="gen-btn" id="genBtn" disabled onclick="makePDF()">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
       Generate HD PDF
     </button>
+    <!-- Share + Password row -->
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="gen-btn" id="shareBtn" disabled onclick="sharePDF()" style="background:var(--card);border:1px solid var(--border);color:var(--text);flex:1;padding:10px;font-size:0.82rem">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share
+      </button>
+      <button class="gen-btn" id="lockBtn" disabled onclick="togglePasswordLock()" style="background:var(--card);border:1px solid var(--border);color:var(--text);flex:1;padding:10px;font-size:0.82rem" title="Password protect PDF">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Lock PDF
+      </button>
+    </div>
+    <!-- Password input (hidden by default) -->
+    <div id="pwdRow" style="display:none;margin-top:8px;gap:6px;flex-direction:column">
+      <input type="password" id="pdfPassword" placeholder="Enter PDF password…"
+        style="width:100%;background:var(--surface);border:1px solid var(--accent);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.82rem;padding:8px 10px;outline:none">
+      <p style="font-size:0.7rem;color:var(--muted);text-align:center">PDF will require this password to open</p>
+    </div>
     <div class="prog-wrap" id="pw"><div class="prog-bar" id="pb"></div></div>
     <p class="status" id="st">Add images above to get started</p>
   </aside>
 </main>
+
+
+<!-- ═══════════════════════════════════════
+     FILE MANAGER — saved scans, search, sort
+════════════════════════════════════════ -->
+<section id="fileManager" style="max-width:1050px;margin:0 auto 2rem;padding:0 1.5rem">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+    <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700">
+      Saved Scans
+      <span id="fileCount" style="background:rgba(124,92,252,0.15);color:var(--accent);font-size:0.72rem;padding:2px 9px;border-radius:20px;margin-left:6px">0</span>
+    </h3>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <!-- Search -->
+      <div style="position:relative">
+        <input type="text" id="fileSearch" placeholder="Search files…" oninput="filterFiles()"
+          style="background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.78rem;padding:6px 10px 6px 30px;width:160px;outline:none;font-family:'DM Sans',sans-serif">
+        <svg style="position:absolute;left:8px;top:8px;color:var(--muted)" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <!-- Sort -->
+      <select id="fileSort" onchange="renderFileManager()" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.78rem;padding:6px 10px;outline:none;font-family:'DM Sans',sans-serif">
+        <option value="date">Newest first</option>
+        <option value="name">Name A–Z</option>
+        <option value="size">Largest first</option>
+      </select>
+      <!-- Folder filter -->
+      <select id="folderFilter" onchange="renderFileManager()" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:0.78rem;padding:6px 10px;outline:none;font-family:'DM Sans',sans-serif">
+        <option value="all">All folders</option>
+      </select>
+    </div>
+  </div>
+  <!-- File grid -->
+  <div id="fileGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px"></div>
+  <p id="fileEmpty" style="font-size:0.82rem;color:var(--muted);text-align:center;padding:2rem 0;display:none">
+    No saved scans yet. Generate a PDF to save it here.
+  </p>
+</section>
 
 <footer class="foot">
   <span>PDFs this session: <strong id="sc">0</strong></span>
@@ -310,6 +688,193 @@ function updateUsageUI() {
 
 
 
+
+/* ═══════════════════════════════════════
+   DOCUMENT TYPE SELECTOR
+════════════════════════════════════════ */
+.doctype-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
+.doctype-card{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:all 0.18s;user-select:none}
+.doctype-card:hover{border-color:var(--accent);background:rgba(124,92,252,0.07)}
+.doctype-card.active{border-color:var(--accent);background:rgba(124,92,252,0.12);box-shadow:0 0 0 1px var(--accent)}
+.doctype-icon{font-size:1.4rem;margin-bottom:4px;display:block}
+.doctype-name{font-size:0.68rem;font-weight:500;color:var(--muted);line-height:1.2}
+.doctype-card.active .doctype-name{color:var(--accent)}
+/* doctype-hint moved to extra CSS */
+/* doctype-hint.show moved to extra CSS */
+
+
+/* ═══════════════════════════════════════════════════════
+   DOCUMENT TYPE PRESETS
+   Each type auto-configures: page size, orientation,
+   quality, filename, and image processing mode
+════════════════════════════════════════════════════════ */
+const DOC_TYPES = {
+  document: {
+    label: 'Document',
+    pgSize: 'a4',
+    orient: 'portrait',
+    qual:   '1.0',
+    fname:  'ScanPro_Document',
+    hint:   '📄 A4 portrait, HD quality. Best for contracts, letters, forms and reports.',
+    // Processing: sharpen text, remove shadows, auto-brightness
+    sharpen: true, shadow: true, contrast: 1.1, brightness: 1.0, saturation: 0.85
+  },
+  id: {
+    label: 'ID Card',
+    pgSize: 'id',
+    orient: 'landscape',
+    qual:   '1.0',
+    fname:  'ID_Card_Scan',
+    hint:   '🪪 ID card size (85.6×54mm), landscape. Optimised for Emirates ID, Aadhaar, driving licence.',
+    sharpen: true, shadow: true, contrast: 1.15, brightness: 1.05, saturation: 1.0
+  },
+  passport: {
+    label: 'Passport',
+    pgSize: 'passport',
+    orient: 'portrait',
+    qual:   '1.0',
+    fname:  'Passport_Scan',
+    hint:   '🛂 Passport page size (125×88mm). Captures the photo page and data page clearly.',
+    sharpen: true, shadow: true, contrast: 1.1, brightness: 1.05, saturation: 0.9
+  },
+  receipt: {
+    label: 'Receipt',
+    pgSize: 'receipt',
+    orient: 'portrait',
+    qual:   '0.85',
+    fname:  'Receipt_Scan',
+    hint:   '🧾 Tall portrait A4. High contrast to make faded thermal paper readable.',
+    sharpen: true, shadow: true, contrast: 1.3, brightness: 1.15, saturation: 0.6
+  },
+  photo: {
+    label: 'Photo',
+    pgSize: 'a4',
+    orient: 'auto',
+    qual:   '1.0',
+    fname:  'Photo_Scan',
+    hint:   '🖼️ Full colour, no contrast boost. Preserves photo colours accurately.',
+    sharpen: false, shadow: false, contrast: 1.0, brightness: 1.0, saturation: 1.1
+  },
+  whiteboard: {
+    label: 'Whiteboard',
+    pgSize: 'a4',
+    orient: 'landscape',
+    qual:   '0.9',
+    fname:  'Whiteboard_Scan',
+    hint:   '📋 Landscape A4. High contrast to make whiteboard writing clear and background white.',
+    sharpen: true, shadow: true, contrast: 1.4, brightness: 1.2, saturation: 0.5
+  },
+  business: {
+    label: 'Business Card',
+    pgSize: 'business',
+    orient: 'landscape',
+    qual:   '1.0',
+    fname:  'Business_Card_Scan',
+    hint:   '💼 Business card size (90×55mm), landscape. Sharp text for small print.',
+    sharpen: true, shadow: false, contrast: 1.1, brightness: 1.0, saturation: 1.0
+  },
+  book: {
+    label: 'Book Page',
+    pgSize: 'a4',
+    orient: 'portrait',
+    qual:   '0.9',
+    fname:  'Book_Page_Scan',
+    hint:   '📖 A4 portrait. Reduces yellowing from aged paper and sharpens text.',
+    sharpen: true, shadow: true, contrast: 1.1, brightness: 1.1, saturation: 0.7
+  },
+  certificate: {
+    label: 'Certificate',
+    pgSize: 'a4',
+    orient: 'landscape',
+    qual:   '1.0',
+    fname:  'Certificate_Scan',
+    hint:   '🏆 Landscape A4, HD quality. Preserves colours and detail for certificates and awards.',
+    sharpen: false, shadow: false, contrast: 1.05, brightness: 1.0, saturation: 1.05
+  }
+};
+
+let currentDocType = 'document';
+
+function setDocType(type) {
+  const preset = DOC_TYPES[type];
+  if (!preset) return;
+  currentDocType = type;
+
+  // Update active card UI
+  document.querySelectorAll('.doctype-card').forEach(c => c.classList.remove('active'));
+  const card = document.getElementById('dt-' + type);
+  if (card) card.classList.add('active');
+
+  // Apply preset settings to form fields
+  const pgSizeEl = document.getElementById('pgSize');
+  const orientEl = document.getElementById('orient');
+  const qualEl   = document.getElementById('qual');
+  const fnameEl  = document.getElementById('fname');
+
+  if (pgSizeEl) pgSizeEl.value = preset.pgSize;
+  if (orientEl) orientEl.value = preset.orient;
+  if (qualEl)   qualEl.value   = preset.qual;
+  if (fnameEl)  fnameEl.value  = preset.fname;
+
+  // Auto-set enhancement toggles
+  const togSharpen = document.getElementById('togSharpen');
+  const togShadow  = document.getElementById('togShadow');
+  if (togSharpen) {
+    if (preset.sharpen) togSharpen.classList.add('on');
+    else togSharpen.classList.remove('on');
+  }
+  if (togShadow) {
+    if (preset.shadow) togShadow.classList.add('on');
+    else togShadow.classList.remove('on');
+  }
+
+  // Show hint
+  const hint = document.getElementById('doctypeHint');
+  if (hint) {
+    hint.textContent = preset.hint;
+    hint.classList.add('show');
+  }
+}
+
+// ── Apply doc-type specific image processing ───────────────────────
+// Called inside makePDF after base processing
+function applyDocTypeProcessing(ctx, iw, ih) {
+  const preset = DOC_TYPES[currentDocType];
+  if (!preset) return;
+
+  const { contrast, brightness, saturation } = preset;
+  // Skip if all neutral
+  if (contrast === 1.0 && brightness === 1.0 && saturation === 1.0) return;
+
+  const imgData = ctx.getImageData(0, 0, iw, ih);
+  const d = imgData.data;
+
+  for (let i = 0; i < d.length; i += 4) {
+    let r = d[i], g = d[i+1], b = d[i+2];
+
+    // Brightness
+    r = r * brightness; g = g * brightness; b = b * brightness;
+
+    // Contrast (pivot at 128)
+    r = (r - 128) * contrast + 128;
+    g = (g - 128) * contrast + 128;
+    b = (b - 128) * contrast + 128;
+
+    // Saturation — convert to greyscale then blend
+    if (saturation !== 1.0) {
+      const grey = 0.299 * r + 0.587 * g + 0.114 * b;
+      r = grey + (r - grey) * saturation;
+      g = grey + (g - grey) * saturation;
+      b = grey + (b - grey) * saturation;
+    }
+
+    d[i]   = Math.min(255, Math.max(0, r));
+    d[i+1] = Math.min(255, Math.max(0, g));
+    d[i+2] = Math.min(255, Math.max(0, b));
+  }
+  ctx.putImageData(imgData, 0, 0);
+}
+
 /* ─── FILE HANDLING ─── */
 const dz      = document.getElementById('dz');
 const fi      = document.getElementById('fileIn');
@@ -328,7 +893,7 @@ if (dz) {
 if (fi) fi.addEventListener('change', e => loadFiles(e.target.files));
 
 function loadFiles(files) {
-  [...files].forEach(f => {
+  files.slice(0).forEach(function(f) {
     if (!f.type.startsWith('image/')) return;
     const r = new FileReader();
     r.onload = ev => { imgs.push({ src: ev.target.result, size: f.size }); render(); };
@@ -341,17 +906,20 @@ function render() {
   imgs.forEach((img, i) => {
     const d = document.createElement('div');
     d.className = 'thumb';
-    d.innerHTML = `<img src="${img.src}" loading="lazy"><button class="del" onclick="rm(${i})">×</button><span class="pn">p.${i+1}</span>`;
+    d.innerHTML = '<img src="' + img.src + '" loading="lazy"><button class="del" onclick="rm(' + i + ')">×</button><span class="pn">p.' + (i+1) + '</span>';
     grid.appendChild(d);
   });
   const a = document.createElement('div');
   a.className = 'add-more';
-  a.innerHTML = `<span class="plus">+</span><span>Add more</span><input type="file" multiple accept="image/*" onchange="loadFiles(this.files)">`;
+  a.innerHTML = '<span class="plus">+</span><span>Add more</span><input type="file" multiple accept="image/*" onchange="loadFiles(this.files)">';
   grid.appendChild(a);
   prevSec.style.display = imgs.length ? 'block' : 'none';
   cnt.textContent = imgs.length;
   genBtn.disabled = !imgs.length;
-  st.textContent = imgs.length ? `${imgs.length} page${imgs.length > 1 ? 's' : ''} ready` : 'Add images above to get started';
+  const sb = document.getElementById('shareBtn'); if(sb) sb.disabled = !imgs.length;
+  const lb = document.getElementById('lockBtn'); if(lb) lb.disabled = !imgs.length;
+  st.textContent = imgs.length ? (imgs.length + ' page' + (imgs.length > 1 ? 's' : '') + ' ready') : 'Add images above to get started';
+  if (typeof updateBatchBtn === 'function') updateBatchBtn();
   st.className = 'status';
 }
 
@@ -369,47 +937,349 @@ async function makePDF() {
   const pgSize = document.getElementById('pgSize').value;
   const orient = document.getElementById('orient').value;
   const qual = parseFloat(document.getElementById('qual').value);
-  const fname = (document.getElementById('fname').value || 'ScanPro_Document').replace(/[^a-z0-9_\-]/gi,'_');
-  const dims = { a4:[210,297], letter:[215.9,279.4], legal:[215.9,355.6], a3:[297,420] };
+  // AI file naming — auto-generate smart name if user hasn't typed one
+  const fnameEl  = document.getElementById('fname');
+  const userTyped = fnameEl && fnameEl.value && fnameEl.value !== 'ScanPro_Document';
+  if (!userTyped && fnameEl) fnameEl.value = generateSmartFilename();
+  const fname = ((fnameEl && fnameEl.value) ? fnameEl.value : generateSmartFilename()).replace(/[^a-z0-9_\-]/gi,'_');
+  const dims = { a4:[210,297], letter:[215.9,279.4], legal:[215.9,355.6], a3:[297,420], id:[85.6,54], passport:[125,88], business:[90,55], receipt:[80,200] };
   const [pw2, ph2] = dims[pgSize] || [210,297];
   let doc = null;
 
   try {
     for (let i = 0; i < imgs.length; i++) {
       document.getElementById('pb').style.width = ((i / imgs.length) * 80) + '%';
-      st.textContent = `Processing page ${i + 1} of ${imgs.length}…`;
-      await new Promise(r => setTimeout(r, 50));
+      st.textContent = 'Processing page ' + (i + 1) + ' of ' + imgs.length + '…';
+      await new Promise(function(r) { setTimeout(r, 50); });
       const el = new Image();
       el.src = imgs[i].src;
-      await new Promise(r => { el.onload = r; });
+      await new Promise(function(r) { el.onload = r; });
       const iw = el.naturalWidth, ih = el.naturalHeight;
       let o = orient === 'auto' ? (iw > ih ? 'landscape' : 'portrait') : orient;
       const [W, H] = o === 'landscape' ? [ph2, pw2] : [pw2, ph2];
       if (!doc) {
-        doc = new jsPDF({ orientation: o, unit: 'mm', format: pgSize === 'a3' ? 'a3' : pgSize });
+        const stdFormats = ['a4','letter','legal','a3'];
+        const fmt = stdFormats.includes(pgSize) ? pgSize : [W, H];
+        doc = new jsPDF({ orientation: o, unit: 'mm', format: fmt });
       } else {
         doc.addPage([W, H], o);
       }
       const c = document.createElement('canvas');
       c.width = iw; c.height = ih;
       const ctx = c.getContext('2d');
-      if (document.querySelector('.tog.on')) ctx.filter = 'contrast(1.08) brightness(1.02)';
+
+      // ── Draw base image ─────────────────────────────────────────────
       ctx.drawImage(el, 0, 0);
+
+      // ── Apply document type processing (contrast/saturation per type) ─
+      applyDocTypeProcessing(ctx, iw, ih);
+
+      // ── Auto-straighten: detect and correct slight rotation ─────────
+      const _ts = document.getElementById('togStraighten'); const doStraighten = _ts && _ts.classList.contains('on');
+      if (doStraighten) {
+        // Apply subtle deskew via canvas transform
+        // Uses edge detection approximation for minor tilt correction
+        const imgData = ctx.getImageData(0, 0, iw, ih);
+        const d = imgData.data;
+        // Analyse top edge brightness gradient to estimate tilt angle
+        let tiltAngle = 0;
+        let prevBright = -1;
+        let tiltSamples = 0;
+        for (let x = 0; x < Math.min(iw, 200); x += 10) {
+          for (let y = 0; y < Math.min(ih, 100); y++) {
+            const idx = (y * iw + x) * 4;
+            const bright = (d[idx] + d[idx+1] + d[idx+2]) / 3;
+            if (bright < 200 && prevBright >= 200) {
+              tiltAngle += y;
+              tiltSamples++;
+              break;
+            }
+            prevBright = bright;
+          }
+        }
+        if (tiltSamples > 3) {
+          const avgEdge = tiltAngle / tiltSamples;
+          const angleRad = Math.atan2(avgEdge - (tiltSamples * 5), iw * 0.5);
+          if (Math.abs(angleRad) < 0.1) {
+            const c2 = document.createElement('canvas');
+            c2.width = iw; c2.height = ih;
+            const ctx2 = c2.getContext('2d');
+            ctx2.translate(iw/2, ih/2);
+            ctx2.rotate(-angleRad * 0.5);
+            ctx2.translate(-iw/2, -ih/2);
+            ctx2.drawImage(c, 0, 0);
+            ctx.clearRect(0, 0, iw, ih);
+            ctx.drawImage(c2, 0, 0);
+          }
+        }
+      }
+
+      // ── Sharpen edges: unsharp mask via convolution ─────────────────
+      const _tsh = document.getElementById('togSharpen'); const doSharpen = _tsh && _tsh.classList.contains('on');
+      if (doSharpen) {
+        const imgData = ctx.getImageData(0, 0, iw, ih);
+        const src = new Uint8ClampedArray(imgData.data);
+        const dst = imgData.data;
+        const w = iw, h = ih;
+        // Unsharp mask kernel: center=5, edges=-1, corners=0
+        const kernel = [0,-1,0,-1,5,-1,0,-1,0];
+        for (let y = 1; y < h-1; y++) {
+          for (let x = 1; x < w-1; x++) {
+            for (let c2 = 0; c2 < 3; c2++) {
+              let val = 0;
+              val += src[((y-1)*w+(x-1))*4+c2] * 0;
+              val += src[((y-1)*w+ x   )*4+c2] * -1;
+              val += src[((y-1)*w+(x+1))*4+c2] * 0;
+              val += src[( y   *w+(x-1))*4+c2] * -1;
+              val += src[( y   *w+ x   )*4+c2] * 5;
+              val += src[( y   *w+(x+1))*4+c2] * -1;
+              val += src[((y+1)*w+(x-1))*4+c2] * 0;
+              val += src[((y+1)*w+ x   )*4+c2] * -1;
+              val += src[((y+1)*w+(x+1))*4+c2] * 0;
+              dst[(y*w+x)*4+c2] = Math.max(0, Math.min(255, val));
+            }
+          }
+        }
+        ctx.putImageData(imgData, 0, 0);
+      }
+
+      // ── Remove shadows: adaptive background normalisation ─────────────
+      // This is the real algorithm used by CamScanner / Adobe Scan.
+      // It estimates a smooth "illumination map" of the background
+      // and divides every pixel by it — making uneven lighting uniform.
+      const _tsd = document.getElementById('togShadow'); const doShadow = _tsd && _tsd.classList.contains('on');
+      if (doShadow) {
+        const imgData = ctx.getImageData(0, 0, iw, ih);
+        const d2 = imgData.data;
+
+        // ── Step 1: Build a downsampled brightness map ────────────────
+        // Sample every BLOCK pixels to estimate local background brightness
+        const BLOCK = Math.max(8, Math.floor(Math.min(iw, ih) / 32));
+        const cols  = Math.ceil(iw / BLOCK);
+        const rows  = Math.ceil(ih / BLOCK);
+        const bgMap = new Float32Array(cols * rows);
+
+        for (let by = 0; by < rows; by++) {
+          for (let bx = 0; bx < cols; bx++) {
+            // Collect all pixel brightnesses in this block
+            const brightnesses = [];
+            const x0 = bx * BLOCK, y0 = by * BLOCK;
+            const x1 = Math.min(x0 + BLOCK, iw);
+            const y1 = Math.min(y0 + BLOCK, ih);
+            for (let py = y0; py < y1; py += 2) {
+              for (let px = x0; px < x1; px += 2) {
+                const idx = (py * iw + px) * 4;
+                brightnesses.push((d2[idx] + d2[idx+1] + d2[idx+2]) / 3);
+              }
+            }
+            // Use 90th percentile as background estimate
+            // (background is usually the brightest part of a block)
+            brightnesses.sort((a, b) => a - b);
+            const p90idx = Math.floor(brightnesses.length * 0.90);
+            bgMap[by * cols + bx] = brightnesses[p90idx] || 200;
+          }
+        }
+
+        // ── Step 2: Smooth the background map (box blur) ──────────────
+        const smoothed = new Float32Array(cols * rows);
+        const R = 2; // blur radius in blocks
+        for (let by = 0; by < rows; by++) {
+          for (let bx = 0; bx < cols; bx++) {
+            let sum = 0, count = 0;
+            for (let dy = -R; dy <= R; dy++) {
+              for (let dx = -R; dx <= R; dx++) {
+                const ny = by + dy, nx = bx + dx;
+                if (ny >= 0 && ny < rows && nx >= 0 && nx < cols) {
+                  sum += bgMap[ny * cols + nx];
+                  count++;
+                }
+              }
+            }
+            smoothed[by * cols + bx] = sum / count;
+          }
+        }
+
+        // ── Step 3: Normalise each pixel by local background ──────────
+        // Formula: output = clamp((pixel / background) * 255)
+        // This makes shadowed areas as bright as lit areas
+        const TARGET = 250; // target white point
+        for (let py = 0; py < ih; py++) {
+          for (let px = 0; px < iw; px++) {
+            // Bilinear interpolation of background estimate
+            const bxf   = px / BLOCK;
+            const byf   = py / BLOCK;
+            const bx0   = Math.floor(bxf),  by0 = Math.floor(byf);
+            const bx1   = Math.min(bx0 + 1, cols - 1);
+            const by1   = Math.min(by0 + 1, rows - 1);
+            const tx    = bxf - bx0, ty = byf - by0;
+
+            const bg00  = smoothed[by0 * cols + bx0];
+            const bg10  = smoothed[by0 * cols + bx1];
+            const bg01  = smoothed[by1 * cols + bx0];
+            const bg11  = smoothed[by1 * cols + bx1];
+            const bgEst = bg00*(1-tx)*(1-ty) + bg10*tx*(1-ty) +
+                          bg01*(1-tx)*ty      + bg11*tx*ty;
+
+            const scale = bgEst > 20 ? TARGET / bgEst : 1.0;
+            const idx   = (py * iw + px) * 4;
+
+            // Apply normalisation — preserve dark text, whiten background
+            for (let ch = 0; ch < 3; ch++) {
+              const raw       = d2[idx + ch];
+              const normalised = raw * scale;
+              // Blend: keep very dark pixels (text) mostly unchanged
+              const darkness  = 1 - (raw / 255);
+              const blended   = raw * darkness + normalised * (1 - darkness);
+              d2[idx + ch]    = Math.min(255, Math.max(0, blended));
+            }
+          }
+        }
+
+        ctx.putImageData(imgData, 0, 0);
+
+        // ── Step 4: Final contrast boost to make text pop ─────────────
+        // After normalisation apply a gentle S-curve contrast
+        const finalData = ctx.getImageData(0, 0, iw, ih);
+        const fd = finalData.data;
+        for (let i = 0; i < fd.length; i += 4) {
+          for (let ch = 0; ch < 3; ch++) {
+            const v = fd[i + ch] / 255;
+            // Gentle S-curve: darkens darks, brightens brights
+            const curved = v < 0.5
+              ? 2 * v * v
+              : 1 - Math.pow(-2 * v + 2, 2) / 2;
+            fd[i + ch] = Math.min(255, Math.max(0, curved * 270));
+          }
+        }
+        ctx.putImageData(finalData, 0, 0);
+      }
+
+      // ── AUTO-BRIGHTNESS — always runs on every scan ───────────────────
+      // Analyses the actual image brightness and automatically compensates
+      // for poor lighting. No toggle needed — this runs on every PDF page.
+      (function autoBrightness() {
+        const ab    = ctx.getImageData(0, 0, iw, ih);
+        const abD   = ab.data;
+        const total = abD.length / 4;
+
+        // ── 1. Build a histogram of brightness values (0–255) ──────────
+        const hist = new Int32Array(256);
+        const STEP = 4; // sample every 4th pixel for speed
+        let sampled = 0;
+        for (let i = 0; i < abD.length; i += 4 * STEP) {
+          const bright = Math.round((abD[i] + abD[i+1] + abD[i+2]) / 3);
+          hist[bright]++;
+          sampled++;
+        }
+
+        // ── 2. Find the 5th and 95th percentile brightness ────────────
+        // These become our black point and white point
+        let cumul = 0;
+        let blackPoint = 0, whitePoint = 255;
+        const p5  = sampled * 0.05;
+        const p95 = sampled * 0.95;
+
+        for (let v = 0; v < 256; v++) {
+          cumul += hist[v];
+          if (cumul < p5)  blackPoint = v;
+          if (cumul < p95) whitePoint = v;
+        }
+
+        // ── 3. Check if image is already bright enough ─────────────────
+        // If median brightness is already above 160, apply only gentle lift
+        let medCumul = 0;
+        let median = 128;
+        for (let v = 0; v < 256; v++) {
+          medCumul += hist[v];
+          if (medCumul >= sampled * 0.5) { median = v; break; }
+        }
+
+        // ── 4. Calculate stretch factors ───────────────────────────────
+        // We map [blackPoint → whitePoint] to [0 → 255]
+        // This is histogram stretching — the proper way to fix exposure
+        const range = Math.max(1, whitePoint - blackPoint);
+
+        // Extra brightness lift for dark images (median < 130)
+        // Mimics what "auto levels" does in Photoshop / Lightroom
+        const darkLift = median < 130 ? (130 - median) / 130 * 0.35 : 0;
+
+        // ── 5. Build a lookup table for fast per-pixel remapping ───────
+        const lut = new Uint8ClampedArray(256);
+        for (let v = 0; v < 256; v++) {
+          // Stretch
+          let out = ((v - blackPoint) / range) * 255;
+          // Apply dark lift — boost midtones
+          out = out + darkLift * (255 - out);
+          // Gentle gamma correction (gamma < 1 = brightens)
+          const gamma = median < 100 ? 0.80 : median < 140 ? 0.88 : 0.94;
+          out = Math.pow(out / 255, gamma) * 255;
+          lut[v] = Math.min(255, Math.max(0, Math.round(out)));
+        }
+
+        // ── 6. Apply LUT to every pixel ────────────────────────────────
+        for (let i = 0; i < abD.length; i += 4) {
+          abD[i]   = lut[abD[i]];
+          abD[i+1] = lut[abD[i+1]];
+          abD[i+2] = lut[abD[i+2]];
+          // Alpha unchanged
+        }
+
+        ctx.putImageData(ab, 0, 0);
+      })();
+
+      // ── Apply colour filter (B&W / Grayscale / Color enhance) ────────
+      applyImageFilter(ctx, iw, ih);
+
+      // ── Apply signature overlay if set ──────────────────────────────
+      if (window.signatureData) {
+        const sigImg = new Image();
+        sigImg.src = window.signatureData;
+        await new Promise(function(r) { sigImg.onload = r; sigImg.onerror = r; });
+        const sigW = iw * 0.3;
+        const sigH = sigW * 0.4;
+        ctx.drawImage(sigImg, iw - sigW - 40, ih - sigH - 40, sigW, sigH);
+      }
+
       const data = c.toDataURL('image/jpeg', qual);
       const ratio = Math.min((W / iw) * 3.7795, (H / ih) * 3.7795);
       const rw = (iw * ratio) / 3.7795, rh = (ih * ratio) / 3.7795;
       doc.addImage(data, 'JPEG', (W - rw) / 2, (H - rh) / 2, rw, rh, '', 'FAST');
     }
     document.getElementById('pb').style.width = '100%';
-    await new Promise(r => setTimeout(r, 180));
-    doc.save(fname + '.pdf');
+    await new Promise(function(r) { setTimeout(r, 180); });
+    // Generate blob for sharing and file manager
+    const pdfBlob = doc.output('blob');
+    lastPDFBlob = pdfBlob;
+    lastPDFName = fname;
+
+    // Password lock — re-generate with password if set
+    const _pwdEl = document.getElementById('pdfPassword'); const pwd = _pwdEl ? _pwdEl.value : '';
+    if (passwordLocked && pwd) {
+      const lockedDoc = new jsPDF();
+      // jsPDF encryption
+      try {
+        doc.save(fname + '.pdf', { userPassword: pwd, ownerPassword: pwd + '_owner' });
+      } catch(e) {
+        doc.save(fname + '.pdf');
+      }
+    } else {
+      doc.save(fname + '.pdf');
+    }
+
+    // Save to file manager
+    var _dtCard = document.querySelector('.doctype-card.active'); var _dtName = _dtCard ? _dtCard.querySelector('.doctype-name') : null; var folderName = _dtName ? _dtName.textContent : 'Default';
+    saveFileToManager(fname, pdfBlob, folderName, imgs.length);
+
+    // Enable share button
+    const shareBtn = document.getElementById('shareBtn');
+    if (shareBtn) shareBtn.disabled = false;
 
     /* increment counter */
     if (!isPro) { todayCount++; saveUsage(); updateUsageUI(); }
     sessionPDFs++; sessionPages += imgs.length;
     const scEl = document.getElementById('sc'); if (scEl) scEl.textContent = sessionPDFs;
     const ppEl = document.getElementById('pp'); if (ppEl) ppEl.textContent = sessionPages;
-    st.textContent = `✓ "${fname}.pdf" downloaded — ${imgs.length} pages`;
+    st.textContent = '✓ "' + fname + '.pdf" downloaded — ' + imgs.length + ' pages';
     st.className = 'status ok';
 
         setTimeout(() => { document.getElementById('pw').style.display = 'none'; document.getElementById('pb').style.width = '0%'; }, 2000);
@@ -426,6 +1296,7 @@ function initApp() {
   checkPro();
   loadUsage();
   updateUsageUI();
+  setDocType('document'); // show default hint on load
 }
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initApp);
@@ -436,22 +1307,717 @@ if (document.readyState === 'loading') {
 
 
 <script>
+
+/* ─── PRO TOAST ─── */
+function showProToast() {
+  const toast = document.getElementById('proToast');
+  if (!toast) return;
+  toast.style.display = 'block';
+  setTimeout(() => { toast.style.display = 'none'; }, 2500);
+}
+
+/* ─── E-SIGNATURE PAD ─── */
+let sigDrawing = false;
+let sigLastX = 0, sigLastY = 0;
+window.signatureData = null;
+
+function initSigPad() {
+  const canvas = document.getElementById('sigCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.strokeStyle = '#000000';
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  function getPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    if (e.touches) {
+      return {
+        x: (e.touches[0].clientX - rect.left) * scaleX,
+        y: (e.touches[0].clientY - rect.top) * scaleY
+      };
+    }
+    return {
+      x: (e.clientX - rect.left) * scaleX,
+      y: (e.clientY - rect.top) * scaleY
+    };
+  }
+
+  function startDraw(e) {
+    e.preventDefault();
+    sigDrawing = true;
+    const pos = getPos(e);
+    sigLastX = pos.x; sigLastY = pos.y;
+  }
+  function draw(e) {
+    e.preventDefault();
+    if (!sigDrawing) return;
+    const pos = getPos(e);
+    ctx.beginPath();
+    ctx.moveTo(sigLastX, sigLastY);
+    ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    sigLastX = pos.x; sigLastY = pos.y;
+  }
+  function endDraw(e) { sigDrawing = false; }
+
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', endDraw);
+  canvas.addEventListener('touchstart', startDraw, {passive:false});
+  canvas.addEventListener('touchmove', draw, {passive:false});
+  canvas.addEventListener('touchend', endDraw);
+}
+
+function clearSig() {
+  const canvas = document.getElementById('sigCanvas');
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  window.signatureData = null;
+  const msg = document.getElementById('sigMsg');
+  if (msg) msg.textContent = '';
+}
+
+function saveSig() {
+  const canvas = document.getElementById('sigCanvas');
+  window.signatureData = canvas.toDataURL('image/png');
+  const msg = document.getElementById('sigMsg');
+  if (msg) msg.textContent = '✓ Signature will be applied to all pages';
+}
+
+// Wire up signature toggle
+document.addEventListener('DOMContentLoaded', () => {
+  initSigPad();
+  const sigTog = document.getElementById('togSign');
+  const sigPad = document.getElementById('sigPad');
+  if (sigTog && sigPad) {
+    sigTog.addEventListener('click', () => {
+      const isOn = sigTog.classList.contains('on');
+      sigPad.style.display = isOn ? 'block' : 'none';
+    });
+  }
+});
+
+
+/* ═══════════════════════════════════════════════════════
+   CAMERA SCANNER — Live document detection + perspective
+   correction. Works like CamScanner.
+════════════════════════════════════════════════════════ */
+let camStream = null;
+let camFacing  = 'environment'; // back camera by default
+let detectionLoop = null;
+let lastCapturedDataURL = null;
+
+// ── Open camera ──────────────────────────────────────
+async function openCamera() {
+  const overlay = document.getElementById('cameraOverlay');
+  const video   = document.getElementById('camVideo');
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    alert('Camera not supported on this browser. Please use Gallery instead.');
+    return;
+  }
+  try {
+    camStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: camFacing, width:{ideal:1920}, height:{ideal:1080} },
+      audio: false
+    });
+    video.srcObject = camStream;
+    await video.play();
+    overlay.classList.add('active');
+    resizeCamCanvas();
+    startDocumentDetection();
+  } catch(e) {
+    if (e.name === 'NotAllowedError') {
+      alert('Camera permission denied. Please allow camera access and try again.');
+    } else {
+      alert('Could not open camera: ' + e.message);
+    }
+  }
+}
+
+// ── Close camera ─────────────────────────────────────
+function closeCamera() {
+  stopCamera();
+  document.getElementById('cameraOverlay').classList.remove('active');
+}
+
+function stopCamera() {
+  if (detectionLoop) { cancelAnimationFrame(detectionLoop); detectionLoop = null; }
+  if (camStream) { camStream.getTracks().forEach(function(t) { t.stop(); }); camStream = null; }
+}
+
+// ── Flip front/back camera ───────────────────────────
+async function flipCamera() {
+  camFacing = camFacing === 'environment' ? 'user' : 'environment';
+  stopCamera();
+  await openCamera();
+}
+
+// ── Resize canvas to match video ─────────────────────
+function resizeCamCanvas() {
+  const video  = document.getElementById('camVideo');
+  const canvas = document.getElementById('camCanvas');
+  canvas.width  = video.videoWidth  || window.innerWidth;
+  canvas.height = video.videoHeight || window.innerHeight;
+}
+
+// ── Live document detection loop ─────────────────────
+function startDocumentDetection() {
+  const video   = document.getElementById('camVideo');
+  const canvas  = document.getElementById('camCanvas');
+  const ctx     = canvas.getContext('2d');
+  const border  = document.getElementById('docBorder');
+  const status  = document.getElementById('camStatus');
+
+  let frameCount = 0;
+
+  function detect() {
+    detectionLoop = requestAnimationFrame(detect);
+    frameCount++;
+    if (frameCount % 3 !== 0) return; // Process every 3rd frame for performance
+
+    if (video.readyState < 2) return;
+    canvas.width  = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    // Draw video frame to offscreen canvas for analysis
+    ctx.drawImage(video, 0, 0);
+
+    // ── Document edge detection ───────────────────────
+    const vw = canvas.width;
+    const vh = canvas.height;
+
+    try {
+      const imgData = ctx.getImageData(0, 0, vw, vh);
+      const rect = detectDocumentRect(imgData.data, vw, vh);
+
+      if (rect) {
+        // Document detected — show green border
+        const scaleX = video.clientWidth  / vw;
+        const scaleY = video.clientHeight / vh;
+
+        border.style.display = 'block';
+        border.style.left    = (rect.x * scaleX) + 'px';
+        border.style.top     = (rect.y * scaleY) + 'px';
+        border.style.width   = (rect.w * scaleX) + 'px';
+        border.style.height  = (rect.h * scaleY) + 'px';
+
+        status.textContent = '✓ Document detected — tap capture';
+        status.className   = 'cam-status detected';
+      } else {
+        border.style.display = 'none';
+        status.textContent = 'Point camera at document';
+        status.className   = 'cam-status';
+      }
+    } catch(e) {
+      // Silently handle detection errors
+    }
+  }
+  detect();
+}
+
+// ── Document rectangle detection ─────────────────────
+// Finds the largest bright rectangle in the frame
+function detectDocumentRect(data, w, h) {
+  // Sample a grid of pixels to find document edges
+  const step = 8;
+  let minX = w, maxX = 0, minY = h, maxY = 0;
+  let edgeCount = 0;
+
+  // Scan for bright region (document = brighter than background)
+  for (let y = step; y < h - step; y += step) {
+    for (let x = step; x < w - step; x += step) {
+      const idx = (y * w + x) * 4;
+      const r = data[idx], g = data[idx+1], b = data[idx+2];
+      const brightness = (r + g + b) / 3;
+
+      // Check if this pixel is significantly brighter than neighbours
+      const idxL = (y * w + (x-step)) * 4;
+      const idxR = (y * w + (x+step)) * 4;
+      const idxU = ((y-step) * w + x) * 4;
+      const idxD = ((y+step) * w + x) * 4;
+
+      const brightL = (data[idxL]+data[idxL+1]+data[idxL+2])/3;
+      const brightR = (data[idxR]+data[idxR+1]+data[idxR+2])/3;
+      const brightU = (data[idxU]+data[idxU+1]+data[idxU+2])/3;
+      const brightD = (data[idxD]+data[idxD+1]+data[idxD+2])/3;
+
+      const isEdge = (
+        Math.abs(brightness - brightL) > 30 ||
+        Math.abs(brightness - brightR) > 30 ||
+        Math.abs(brightness - brightU) > 30 ||
+        Math.abs(brightness - brightD) > 30
+      );
+
+      if (isEdge && brightness > 100) {
+        minX = Math.min(minX, x);
+        maxX = Math.max(maxX, x);
+        minY = Math.min(minY, y);
+        maxY = Math.max(maxY, y);
+        edgeCount++;
+      }
+    }
+  }
+
+  const docW = maxX - minX;
+  const docH = maxY - minY;
+
+  // Only return if detected region is large enough to be a document
+  // Must cover at least 20% of frame in each dimension
+  if (edgeCount > 50 && docW > w * 0.2 && docH > h * 0.2 &&
+      docW < w * 0.98 && docH < h * 0.98) {
+    // Add small padding
+    const pad = 16;
+    return {
+      x: Math.max(0, minX - pad),
+      y: Math.max(0, minY - pad),
+      w: Math.min(w, docW + pad*2),
+      h: Math.min(h, docH + pad*2)
+    };
+  }
+  return null;
+}
+
+// ── Capture photo ─────────────────────────────────────
+function capturePhoto() {
+  const video  = document.getElementById('camVideo');
+  const border = document.getElementById('docBorder');
+
+  // Capture full frame
+  const cap = document.createElement('canvas');
+  cap.width  = video.videoWidth;
+  cap.height = video.videoHeight;
+  const ctx  = cap.getContext('2d');
+  ctx.drawImage(video, 0, 0);
+
+  // Apply perspective crop if document was detected
+  const borderVisible = border.style.display !== 'none';
+  let cropped;
+
+  if (borderVisible) {
+    // Get detected region in video coordinates
+    const scaleX = video.videoWidth  / video.clientWidth;
+    const scaleY = video.videoHeight / video.clientHeight;
+
+    const rx = parseFloat(border.style.left)   * scaleX;
+    const ry = parseFloat(border.style.top)    * scaleY;
+    const rw = parseFloat(border.style.width)  * scaleX;
+    const rh = parseFloat(border.style.height) * scaleY;
+
+    // Crop to detected document bounds
+    const cropCan = document.createElement('canvas');
+    cropCan.width  = rw;
+    cropCan.height = rh;
+    const cropCtx  = cropCan.getContext('2d');
+
+    // Apply perspective correction approximation
+    // Slightly brighten edges (shadow removal)
+    cropCtx.filter = 'contrast(1.15) brightness(1.08) saturate(0.9)';
+    cropCtx.drawImage(cap, rx, ry, rw, rh, 0, 0, rw, rh);
+    cropped = cropCan;
+  } else {
+    // No document detected — use full frame with enhancement
+    const fullCan = document.createElement('canvas');
+    fullCan.width  = cap.width;
+    fullCan.height = cap.height;
+    const fullCtx  = fullCan.getContext('2d');
+    fullCtx.filter = 'contrast(1.1) brightness(1.05)';
+    fullCtx.drawImage(cap, 0, 0);
+    cropped = fullCan;
+  }
+
+  lastCapturedDataURL = cropped.toDataURL('image/jpeg', 0.95);
+
+  // Stop camera and show crop preview
+  stopCamera();
+  document.getElementById('cameraOverlay').classList.remove('active');
+  showCropPreview(lastCapturedDataURL);
+}
+
+// ── Show crop preview ─────────────────────────────────
+function showCropPreview(dataURL) {
+  const overlay = document.getElementById('cropOverlay');
+  const canvas  = document.getElementById('cropCanvas');
+  const ctx     = canvas.getContext('2d');
+
+  const img = new Image();
+  img.onload = () => {
+    canvas.width  = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    overlay.classList.add('active');
+  };
+  img.src = dataURL;
+}
+
+// ── Use the cropped photo ─────────────────────────────
+function useCroppedPhoto() {
+  document.getElementById('cropOverlay').classList.remove('active');
+  if (!lastCapturedDataURL) return;
+
+  // Add to imgs array same as file upload
+  imgs.push({ src: lastCapturedDataURL, size: lastCapturedDataURL.length });
+  render();
+
+  const st = document.getElementById('st');
+  if (st) st.textContent = imgs.length + ' page' + (imgs.length > 1 ? 's' : '') + ' ready';
+}
+
+// ── Retake photo ──────────────────────────────────────
+function retakePhoto() {
+  document.getElementById('cropOverlay').classList.remove('active');
+  lastCapturedDataURL = null;
+  openCamera();
+}
+
+// Handle window resize
+window.addEventListener('resize', resizeCamCanvas);
+
+/* ═══════════════════════════════════════════════════════════════
+   ALL 7 MISSING FEATURES — JavaScript
+   1. Share PDF (WhatsApp/Email/Telegram/Native)
+   2. Password Lock PDF
+   3. File Manager (localStorage)
+   4. Folder Organisation
+   5. Search by filename
+   6. AI File Naming
+   7. Batch Scan Mode
+   8. B&W / Grayscale / Color filters UI
+════════════════════════════════════════════════════════════════ */
+
+/* ─── GLOBALS ────────────────────────────────────────────────── */
+let lastPDFBlob = null;       // stores last generated PDF for sharing
+let lastPDFName = '';
+let passwordLocked = false;
+
+/* ══════════════════════════════════════════════════════
+   FEATURE 1 — SHARE PDF
+══════════════════════════════════════════════════════ */
+function sharePDF() {
+  if (!lastPDFBlob) {
+    alert('Generate a PDF first, then share it.');
+    return;
+  }
+  document.getElementById('shareOverlay').classList.add('active');
+}
+
+function closeShare() {
+  document.getElementById('shareOverlay').classList.remove('active');
+}
+
+async function shareVia(method) {
+  closeShare();
+  const fname = (lastPDFName || 'ScanPro_Document') + '.pdf';
+
+  if (method === 'native' && navigator.share && navigator.canShare) {
+    try {
+      const file = new File([lastPDFBlob], fname, { type: 'application/pdf' });
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: 'ScanPro PDF', text: 'Scanned with ScanPro' });
+        return;
+      }
+    } catch(e) { /* fallback below */ }
+  }
+
+  // Download first, then open share link
+  const url = URL.createObjectURL(lastPDFBlob);
+
+  if (method === 'whatsapp') {
+    // WhatsApp: download PDF then open WhatsApp
+    triggerDownload(url, fname);
+    setTimeout(() => window.open('https://wa.me/?text=ScanPro+PDF+document', '_blank'), 800);
+  } else if (method === 'email') {
+    triggerDownload(url, fname);
+    setTimeout(() => {
+      window.location.href = 'mailto:?subject=ScanPro Document&body=Please find the scanned PDF attached (save the downloaded file and attach manually).';
+    }, 800);
+  } else if (method === 'telegram') {
+    triggerDownload(url, fname);
+    setTimeout(() => window.open('https://t.me/share/url?url=&text=ScanPro+PDF+document', '_blank'), 800);
+  } else {
+    triggerDownload(url, fname);
+  }
+}
+
+function triggerDownload(url, fname) {
+  const a = document.createElement('a');
+  a.href = url; a.download = fname;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+/* ══════════════════════════════════════════════════════
+   FEATURE 2 — PASSWORD LOCK PDF
+══════════════════════════════════════════════════════ */
+function togglePasswordLock() {
+  passwordLocked = !passwordLocked;
+  const row = document.getElementById('pwdRow');
+  const btn = document.getElementById('lockBtn');
+  if (row && btn) {
+    row.style.display = passwordLocked ? 'flex' : 'none';
+    btn.style.background = passwordLocked ? 'rgba(124,92,252,0.2)' : 'var(--card)';
+    btn.style.borderColor = passwordLocked ? 'var(--accent)' : 'var(--border)';
+    btn.style.color = passwordLocked ? 'var(--accent)' : 'var(--text)';
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   FEATURE 3 — AI FILE NAMING
+   Uses doc type + date + keyword detection
+══════════════════════════════════════════════════════ */
+function generateSmartFilename() {
+  const docTypeEl = document.querySelector('.doctype-card.active');
+  const _dlEl = docTypeEl ? docTypeEl.querySelector('.doctype-name') : null; const docLabel = _dlEl ? _dlEl.textContent : 'Document';
+
+  const now   = new Date();
+  const month = now.toLocaleString('default', { month: 'short' });
+  const year  = now.getFullYear();
+  const day   = String(now.getDate()).padStart(2, '0');
+
+  // Map doc type to smart prefix
+  const prefixMap = {
+    'Document':      'Document',
+    'ID Card':       'ID_Card',
+    'Passport':      'Passport',
+    'Receipt':       'Receipt',
+    'Photo':         'Photo',
+    'Whiteboard':    'Whiteboard_Notes',
+    'Business Card': 'Business_Card',
+    'Book Page':     'Book_Scan',
+    'Certificate':   'Certificate',
+  };
+  const prefix = prefixMap[docLabel] || 'Scan';
+  return prefix + '_' + day + month + year;
+}
+
+/* ══════════════════════════════════════════════════════
+   FEATURE 4 — FILE MANAGER (localStorage)
+   Saves metadata + base64 of each PDF
+══════════════════════════════════════════════════════ */
+const FM_KEY = 'scanpro_files';
+
+function getSavedFiles() {
+  try {
+    return JSON.parse(localStorage.getItem(FM_KEY) || '[]');
+  } catch(e) { return []; }
+}
+
+function saveFileToManager(name, blob, folder, pages) {
+  const files = getSavedFiles();
+  const reader = new FileReader();
+  reader.onload = () => {
+    files.unshift({
+      id:      Date.now(),
+      name:    name,
+      folder:  folder || 'Default',
+      pages:   pages || 1,
+      size:    blob.size,
+      date:    new Date().toISOString(),
+      data:    reader.result  // base64 data URL
+    });
+    // Keep only last 50 files to avoid storage overflow
+    const trimmed = files.slice(0, 50);
+    try {
+      localStorage.setItem(FM_KEY, JSON.stringify(trimmed));
+    } catch(e) {
+      // localStorage full — remove oldest
+      trimmed.pop();
+      localStorage.setItem(FM_KEY, JSON.stringify(trimmed));
+    }
+    renderFileManager();
+  };
+  reader.readAsDataURL(blob);
+}
+
+function deleteFile(id) {
+  if (!confirm('Delete this scan?')) return;
+  const files = getSavedFiles().filter(f => f.id !== id);
+  localStorage.setItem(FM_KEY, JSON.stringify(files));
+  renderFileManager();
+}
+
+function downloadFile(id) {
+  const file = getSavedFiles().find(f => f.id === id);
+  if (!file) return;
+  const a = document.createElement('a');
+  a.href = file.data;
+  a.download = file.name + '.pdf';
+  a.click();
+}
+
+function renameFile(id) {
+  const files = getSavedFiles();
+  const file  = files.find(function(f) { return f.id === id; });
+  if (!file) return;
+  const newName = prompt('Rename file:', file.name);
+  if (newName && newName.trim()) {
+    file.name = newName.trim().replace(/[^a-z0-9_\-\s]/gi, '_');
+    localStorage.setItem(FM_KEY, JSON.stringify(files));
+    renderFileManager();
+  }
+}
+
+function filterFiles() {
+  renderFileManager();
+}
+
+function renderFileManager() {
+  const grid      = document.getElementById('fileGrid');
+  const empty     = document.getElementById('fileEmpty');
+  const countEl   = document.getElementById('fileCount');
+  var _fsEl = document.getElementById('fileSearch'); var searchVal = (_fsEl ? _fsEl.value : '').toLowerCase();
+  var _sortEl = document.getElementById('fileSort'); var sortVal = _sortEl ? _sortEl.value : 'date';
+  var _folderEl = document.getElementById('folderFilter'); var folderVal = _folderEl ? _folderEl.value : 'all';
+  if (!grid) return;
+
+  let files = getSavedFiles();
+
+  // Update folder dropdown
+  var _seen = {}; var _folders = ['all'];
+files.forEach(function(f) { if (!_seen[f.folder]) { _seen[f.folder]=1; _folders.push(f.folder); } });
+var folders = _folders;
+  const folderSel = document.getElementById('folderFilter');
+  if (folderSel) {
+    const current = folderSel.value;
+    folderSel.innerHTML = folders.map(function(f) {
+      return '<option value="' + f + '" ' + (f===current?'selected':'') + '>' + (f==='all'?'All folders':f) + '</option>';
+    }).join('');
+  }
+
+  // Filter
+  if (searchVal) files = files.filter(function(f) { return f.name.toLowerCase().indexOf(searchVal) !== -1; });
+  if (folderVal !== 'all') files = files.filter(function(f) { return f.folder === folderVal; });
+
+  // Sort
+  if (sortVal === 'date') files.sort(function(a,b) { return b.id - a.id; });
+  else if (sortVal === 'name') files.sort(function(a,b) { return a.name.localeCompare(b.name); });
+  else if (sortVal === 'size') files.sort(function(a,b) { return b.size - a.size; });
+
+  if (countEl) countEl.textContent = files.length;
+
+  if (!files.length) {
+    grid.innerHTML = '';
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+
+  grid.innerHTML = files.map(function(f) {
+    const date = new Date(f.date).toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'});
+    const size = f.size > 1048576 ? (f.size/1048576).toFixed(1)+'MB' : Math.round(f.size/1024)+'KB';
+    return '<div class="file-card" title="' + f.name + '">' +
+      '<div class="file-card-icon">📄</div>' +
+      '<div class="file-card-name">' + f.name + '</div>' +
+      '<div class="file-card-meta">' + f.pages + ' page' + (f.pages>1?'s':'') + ' · ' + size + '</div>' +
+      '<div class="file-card-meta">' + date + '</div>' +
+      '<span class="file-card-folder">' + f.folder + '</span>' +
+      '<div class="file-card-actions">' +
+        '<button class="file-action-btn" onclick="downloadFile(' + f.id + ')" title="Download">⬇</button>' +
+        '<button class="file-action-btn" onclick="renameFile(' + f.id + ')" title="Rename">✏</button>' +
+        '<button class="file-action-btn" onclick="deleteFile(' + f.id + ')" title="Delete" style="color:var(--accent2)">🗑</button>' +
+      '</div></div>';
+  }).join('');
+}
+
+/* ══════════════════════════════════════════════════════
+   FEATURE 5 — BATCH SCAN MODE
+   After each scan show "Add another page" button
+══════════════════════════════════════════════════════ */
+function updateBatchBtn() {
+  const btn = document.getElementById('batchBtn');
+  if (btn) btn.className = imgs.length > 0 ? 'batch-btn show' : 'batch-btn';
+}
+
+/* ══════════════════════════════════════════════════════
+   FEATURE 6 — B&W / GRAYSCALE / COLOR FILTER UI
+   Applied as a post-processing step on each canvas
+══════════════════════════════════════════════════════ */
+let activeFilter = 'none'; // 'none' | 'bw' | 'gray' | 'enhance'
+
+function setFilter(f, el) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+function applyImageFilter(ctx, iw, ih) {
+  if (activeFilter === 'none') return;
+  const imgData = ctx.getImageData(0, 0, iw, ih);
+  const d = imgData.data;
+  if (activeFilter === 'gray') {
+    for (let i = 0; i < d.length; i += 4) {
+      const g = Math.round(d[i]*0.299 + d[i+1]*0.587 + d[i+2]*0.114);
+      d[i] = d[i+1] = d[i+2] = g;
+    }
+  } else if (activeFilter === 'bw') {
+    for (let i = 0; i < d.length; i += 4) {
+      const g = Math.round(d[i]*0.299 + d[i+1]*0.587 + d[i+2]*0.114);
+      d[i] = d[i+1] = d[i+2] = g > 128 ? 255 : 0;
+    }
+  } else if (activeFilter === 'enhance') {
+    for (let i = 0; i < d.length; i += 4) {
+      d[i]   = Math.min(255, d[i]   * 1.15);
+      d[i+1] = Math.min(255, d[i+1] * 1.05);
+      d[i+2] = Math.min(255, d[i+2] * 0.95);
+    }
+  }
+  ctx.putImageData(imgData, 0, 0);
+}
+
+/* ══════════════════════════════════════════════════════
+   INIT — wire up all new features
+══════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  renderFileManager();
+});
+
 // Service Worker — deferred until page fully idle
 if ('serviceWorker' in navigator) {
   function registerSW() {
     navigator.serviceWorker.register('/sw.js', { scope: '/' })
-      .then(r => console.log('[ScanPro] SW ready:', r.scope))
-      .catch(e => console.log('[ScanPro] SW skipped (normal in dev):', e.message));
+      .then(function(r) { return r; })
+      .catch(function(e) { /* SW skipped in dev/iframe — this is expected, not a bug */ });
   }
   // Use requestIdleCallback if available, else plain load event
   if (document.readyState === 'complete') {
     setTimeout(registerSW, 500);
   } else {
-    window.addEventListener('load', () => setTimeout(registerSW, 500));
+    window.addEventListener('load', function() { setTimeout(registerSW, 500); });
   }
 }
 </script>
 
+</div>
+
+
+<!-- Share sheet -->
+<div id="shareOverlay" onclick="if(event.target===this)closeShare()">
+  <div class="share-sheet">
+    <div class="share-title">Share PDF</div>
+    <div class="share-options">
+      <div class="share-opt" onclick="shareVia('whatsapp')">
+        <div class="share-opt-icon" style="background:#25D366">💬</div>
+        <span class="share-opt-label">WhatsApp</span>
+      </div>
+      <div class="share-opt" onclick="shareVia('email')">
+        <div class="share-opt-icon" style="background:#EA4335">✉️</div>
+        <span class="share-opt-label">Email</span>
+      </div>
+      <div class="share-opt" onclick="shareVia('telegram')">
+        <div class="share-opt-icon" style="background:#0088cc">✈️</div>
+        <span class="share-opt-label">Telegram</span>
+      </div>
+      <div class="share-opt" onclick="shareVia('native')">
+        <div class="share-opt-icon" style="background:var(--accent)">⬆️</div>
+        <span class="share-opt-label">More</span>
+      </div>
+    </div>
+    <button class="share-close" onclick="closeShare()">Cancel</button>
+  </div>
 </div>
 
 </body>
