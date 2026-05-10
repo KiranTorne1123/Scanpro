@@ -83,6 +83,22 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:1.1rem
 
 footer{text-align:center;padding:1.5rem;border-top:1px solid var(--border);font-size:0.75rem;color:var(--muted)}
 footer a{color:var(--accent);text-decoration:none}
+
+.notify-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:500;align-items:center;justify-content:center;padding:1rem}
+.notify-modal-overlay.open{display:flex}
+.notify-modal{background:#15151f;border:1px solid rgba(124,92,252,0.3);border-radius:20px;padding:2rem;max-width:420px;width:100%;position:relative}
+.notify-modal h3{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;margin-bottom:0.5rem}
+.notify-modal p{font-size:0.85rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6}
+.notify-input{width:100%;background:#0e0c1a;border:1px solid rgba(124,92,252,0.3);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.88rem;padding:12px 14px;margin-bottom:10px;outline:none;box-sizing:border-box}
+.notify-input:focus{border-color:var(--accent)}
+.notify-submit{width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;transition:opacity 0.2s}
+.notify-submit:hover{opacity:0.88}
+.notify-close{position:absolute;top:1rem;right:1rem;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--muted);border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.notify-close:hover{color:var(--text)}
+.notify-msg{font-size:0.78rem;text-align:center;margin-top:8px;min-height:16px;color:var(--success)}
+.gumroad-note{font-size:0.72rem;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5}
+.gumroad-note a{color:var(--accent)}
+
 </style>
 </head>
 <body>
@@ -190,7 +206,7 @@ footer a{color:var(--accent);text-decoration:none}
 </div>
 
 <footer>
-  <p>ScanPro · <a href="index.html">Back to app</a> · Questions? Email <a href="mailto:support@yourdomain.com">support@yourdomain.com</a></p>
+  <p>ScanPro · <a href="index.html">Back to app</a> · Questions? Email <a href="mailto:support.scanpro@gmail.com">support.scanpro@gmail.com</a></p>
 </footer>
 
 <script>
@@ -199,5 +215,79 @@ function tog(el) {
   el.nextElementSibling.classList.toggle('open');
 }
 </script>
+
+<!-- Payment modal -->
+<div class="notify-modal-overlay" id="payModal" onclick="if(event.target===this)closePayModal()">
+  <div class="notify-modal">
+    <button class="notify-close" onclick="closePayModal()">✕</button>
+    <h3 id="modalTitle">Upgrade to Pro</h3>
+    <p id="modalDesc">Enter your email and we will send you the payment link directly. Takes 2 minutes to activate.</p>
+    <input class="notify-input" type="email" id="notifyEmail" placeholder="Your email address">
+    <input class="notify-input" type="text" id="notifyName" placeholder="Your name (optional)">
+    <button class="notify-submit" onclick="submitNotify()">Send me the payment link →</button>
+    <p class="notify-msg" id="notifyMsg"></p>
+    <p class="gumroad-note">
+      Secure payment via Gumroad · 30-day money-back guarantee<br>
+      Questions? <a href="mailto:support.scanpro@gmail.com">support.scanpro@gmail.com</a>
+    </p>
+  </div>
+</div>
+
+<script>
+var selectedPlan = 'monthly';
+
+function openPayModal(plan) {
+  selectedPlan = plan;
+  var title = document.getElementById('modalTitle');
+  var desc  = document.getElementById('modalDesc');
+  if (plan === 'monthly') {
+    title.textContent = 'Pro Monthly — $4.99/month';
+    desc.textContent  = 'Enter your email and we will send you the secure payment link. Unlimited PDFs, OCR, e-signature and more.';
+  } else {
+    title.textContent = 'Pro Yearly — $29/year (Save 40%)';
+    desc.textContent  = 'Best value plan. Enter your email and we will send you the payment link. Cancel any time, 30-day refund guarantee.';
+  }
+  document.getElementById('payModal').classList.add('open');
+  document.getElementById('notifyMsg').textContent = '';
+  document.getElementById('notifyEmail').value = '';
+}
+
+function closePayModal() {
+  document.getElementById('payModal').classList.remove('open');
+}
+
+function submitNotify() {
+  var email = document.getElementById('notifyEmail').value.trim();
+  var name  = document.getElementById('notifyName').value.trim();
+  var msg   = document.getElementById('notifyMsg');
+
+  if (!email || email.indexOf('@') === -1) {
+    msg.style.color = '#fc5c7d';
+    msg.textContent = 'Please enter a valid email address.';
+    return;
+  }
+
+  // Send via mailto as fallback (works without a backend)
+  var subject = encodeURIComponent('ScanPro Pro ' + (selectedPlan === 'monthly' ? 'Monthly' : 'Yearly') + ' — Payment Request');
+  var body    = encodeURIComponent(
+    'Name: ' + (name || 'Not provided') + '
+' +
+    'Email: ' + email + '
+' +
+    'Plan: ' + (selectedPlan === 'monthly' ? '$4.99/month' : '$29/year') + '
+
+' +
+    'Please send me the payment link for ScanPro Pro.'
+  );
+
+  window.location.href = 'mailto:support.scanpro@gmail.com?subject=' + subject + '&body=' + body;
+
+  msg.style.color = '#3dd68c';
+  msg.textContent = '✓ Opening your email app… We will reply within 24 hours.';
+
+  setTimeout(closePayModal, 3000);
+}
+</script>
+
 </body>
 </html>
